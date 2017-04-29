@@ -87,7 +87,12 @@ def write_notebook_data_to_py(notebook_data, out_file_path):
                 output.write('\n')
                 for item in cell['source']:
                     if cell['cell_type']=='code':
-                        output.write(item)
+                        # Comment out ipython magic commands like "%matplotlib inline"
+                        if item[0] == '%':
+                            output.write('# ')
+                            output.write(item)
+                        else:
+                            output.write(item)
                     else:
                         output.write('# ')
                         output.write(item)

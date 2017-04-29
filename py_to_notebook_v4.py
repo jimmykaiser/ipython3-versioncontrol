@@ -112,7 +112,11 @@ def build_notebook_cells(lines):
             else:
                 source.append(line)
         elif current_cell=='code':
-            source.append(line)
+            # Remove comments for ipython magic commands like "%matplotlib inline"
+            if line[0:3] == '# %':
+                source.append(line[2:])
+            else:
+                source.append(line)
 
     last_cell = True
     outputcells = close_cell(current_cell)
